@@ -10,6 +10,13 @@ va = Vp*sin(t);
 vb = Vp*sin(t+(-2*pi)/3);
 vc = Vp*sin(t+(2*pi)/3);
 
+%Plot tensão de entrada
+figure();
+plot(t, va, t, vb, t, vc);
+title('Tensão de entrada');
+xlabel('Frequency (rad/s)');
+ylabel('Amplitude (V)');
+
 %Tensões de linha
 vcbb = (vc-vb).*(t>0 & t<(pi/6));
 vab = (va-vb).*(t>(pi/6) & t<((pi/2)));
@@ -23,6 +30,9 @@ vcb = (vc-vb).*(t>(11*pi/6) & t<((13*pi/6)));
 vop = vab + vac + vba + vbc + vca + vcb + vcbb;
 figure();
 plot(t, vop);
+title('Tensão de saída');
+xlabel('Frequency (rad/s)');
+ylabel('Amplitude (V)');
 grid on;
 grid minor;
 
@@ -35,10 +45,12 @@ freq = k/T;
 X = fftn(x)/N;                      % X recebe a FFT normalizada do vetor x sobre N
 cutOff = ceil(N/60);                 % cutOff ajusta o eixo X
 X = X(1:cutOff);
+X = X*2;                            % precisa multiplicar por 2 pois o comando da linha 81 tira 50% da info do sinal. Ver Fig(3 e 4)     
+X(1)=X(1)/2; 
 figure();
 plot(freq(1:cutOff),abs(X), 'LineWidth',1.5);        % Plota a transformada de Fourier e o valor de X em módulo
 title('Fast Fourier Transform');
-xlabel('Frequency (Hz)');
+xlabel('Frequency (rad/s)');
 ylabel('Amplitude');
 % Fim FFT%
 
@@ -52,7 +64,7 @@ syms wt;
 vo = sqrt(3)*Vp*sin(wt);
 Vo = (int(vo, [(pi/3) ((2*pi)/3)]))/(pi/3);
 Vo = vpa(Vo);
-% Corrente média
+Corrente média
 Io = Vo/Z;
 
 %Tensão RMS
@@ -62,26 +74,45 @@ Vrms = vpa(vrms);
 Irms = Vrms/R;
 Irms_fonte = (sqrt(2/3))*Irms;
 Irms_fonte = vpa(Irms_fonte);
+%Corrente RMS
+Irms = Vrms/R;
+Irms_fonte = (sqrt(2/3))*Irms;
+Irms_fonte = vpa(Irms_fonte);
+
 
 %Potências
 P = (Vrms^2)/R;
 S = sqrt(3)*(Vp/sqrt(2))*Irms_fonte;
 fp = P/S;
 
-% Corrente de entrada
+% % Corrente de entrada
 ia = (2*sqrt(3)/pi)*Io*(cos(t)-(1/5)*cos(5*t)+(1/7)*cos(7*t)-(1/11)*cos(11*t)+(1/13)*cos(13*t));
 ib = (2*sqrt(3)/pi)*Io*(cos(t-2*pi/3)-(1/5)*cos(5*(t-2*pi/3))+(1/7)*cos(7*(t-2*pi/3))-(1/11)*cos(11*(t-2*pi/3))+(1/13)*cos(13*(t-2*pi/3)));
 ic = (2*sqrt(3)/pi)*Io*(cos(t+2*pi/3)-(1/5)*cos(5*(t+2*pi/3))+(1/7)*cos(7*(t+2*pi/3))-(1/11)*cos(11*(t+2*pi/3))+(1/13)*cos(13*(t+2*pi/3)));
 figure();
 plot(t, ia, t, ib, t, ic);
-
+title('Corrente de entrada');
+xlabel('Frequency (rad/s)');
+ylabel('Amplitude (A)');
+ 
 %Corrente de saída
 io = ia.*(t>0 & t<(pi/3)) + ib.*(t>(pi/3) & t<(pi)) + ic.*(t>(pi) & t<(5*pi/3));
 figure();
 plot(t, io);
+title('Corrente de saída');
+xlabel('Frequency (rad/s)');
+ylabel('Amplitude (A)');
+
+%Corrente Diodo
+Id = vpa (Io/3);
+Idrms = vpa (Io/sqrt(3));
+Isrms = vpa ((sqrt(2)/sqrt(3))*Io);
 
 fprintf('Vo   = %.3f V \n',sscanf(char(Vo),'%f'));
 fprintf('Io   = %.3f A \n',sscanf(char(Io),'%f'));
+fprintf('Id   = %.3f A \n',sscanf(char(Id),'%f'));
+fprintf('Isrms= %.3f A \n',sscanf(char(Isrms),'%f'));
+fprintf('Idrms= %.3f A \n',sscanf(char(Idrms),'%f'));
 fprintf('Vrms = %.3f V \n',sscanf(char(Vrms),'%f'));
 fprintf('Irms = %.3f A \n',sscanf(char(Irms),'%f'));
 fprintf('P    = %.3f W \n',sscanf(char(P),'%f'));
