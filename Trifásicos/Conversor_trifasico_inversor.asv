@@ -1,0 +1,21 @@
+% Conversor trifásico inversor
+% Considerando L muito alto
+
+Vp = sqrt(2)*4160;              % Tensão de linha
+R = 2;
+Vcc = 3000;
+alpha_graus = 120;
+alpha_rad = deg2rad(120);
+
+if alpha_graus>90 && alpha_graus < 180
+    fprintf('Funcionamento como Inversor');
+    e
+end
+
+Vo = ((3*Vp)/pi)*cos(alpha);                % Tensão CC
+Io = (Vo+Vcc)/R;
+
+Pac = -Io*Vo;                   % Potência que volta para o sistema CA
+Pcc = Io*Vcc;                   % Potência fornecida pela fonte CC
+Pr = (Io^2)*R;                  % Potência absorvida por R
+
