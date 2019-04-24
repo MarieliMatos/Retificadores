@@ -1,8 +1,8 @@
 %Controlador monofásico com carga R
 
- Vp = sqrt(2)*120;
- R = 15;
- alpha = 88.1;
+ Vp = 127*sqrt(2) + 127*0.1;
+ R = 10;
+ alpha = 53;
  alpha_rad = deg2rad(alpha);
  
  syms wt;
@@ -22,7 +22,7 @@
  
  P = Irms*Vrms;
  S = (Vp/sqrt(2))*(Vrms/R);
- fp = P/S;
+ fp = ((Vp/sqrt(2))*sqrt((1-(alpha_rad/pi) + ((sin(2*alpha_rad))/(2*pi)))))/(Vp/sqrt(2));
  
  C1 = 0.61;             % determinado pelo gráfico
  I_base = (Vp/sqrt(2))/R;

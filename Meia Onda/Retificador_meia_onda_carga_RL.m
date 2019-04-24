@@ -1,7 +1,7 @@
-Vp = sqrt(2)*100;
+Vp = 120*sqrt(2);
 f = 60;
-R = 100;
-L = 0.6;
+R = 18;
+L = 0.1;
 Fs = 10000;                       % Frequência de Amostragem
 phase = 0;                        % Defasagem 
 
@@ -29,7 +29,7 @@ Irms = vpa(irms);
 Vrms = Irms*Z;
 
 P = (Irms^2)*R;
-S = (Vp/sqrt(2))*Irms;
+S = (Vp/sqrt(2))*(Irms);
 fp = P/S;
 
 fprintf('Vm     = %.3f V\n',sscanf(char(Vm),'%f'));

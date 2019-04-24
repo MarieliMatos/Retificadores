@@ -19,9 +19,9 @@
 %      Transformada Rápida de Fourier  
 
 %Parametros de entrada
-Vp = sqrt(2)*50;
-R = 40;
-L = 300e-3;
+Vp = sqrt(2)*220;
+R = 29.1465;
+L = 0.6641;
 f = 60;
 
 Fs = 100000;
@@ -78,7 +78,7 @@ vo = (int(v, [0 pi]))/pi;
 Vo = vpa(vo);
 
 %Corrente média de saída
-Io = Vo/R;
+Io = Vo/Z;
 
 %Tensão de saída eficaz
 vrms = sqrt((int(v^2, [0 pi]))/pi);
