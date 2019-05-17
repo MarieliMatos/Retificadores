@@ -1,8 +1,8 @@
 %Controlador monofásico com carga R
 
- Vp = 127*sqrt(2) + 127*0.1;
- R = 10;
- alpha = 53;
+ Vp = 127*sqrt(2);
+ R = 12;
+ alpha = 66.75;
  alpha_rad = deg2rad(alpha);
  
  syms wt;

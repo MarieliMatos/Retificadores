@@ -6,8 +6,8 @@
 %       f   -> frequência de operação do circuito
 Vp = 120*sqrt(2);
 fprintf('Vp     = %0.4f V\n',Vp);
-R = 500;
-C = 100e-6;
+R = 96.8;
+C = 0.0022;
 f = 60;
 w = 2*pi*f;
 wrc = w*R*C;
@@ -32,8 +32,8 @@ v_1 = abs(Vp*sin(wt));
 v_2 = (Vp*sin(theta))*exp(-(wt-theta)/(w*R*C));
 
 %Achar C
-delta_vo = 0.1;
+delta_vo = 0.4;
 C_calc = 1/(2*f*R*delta_vo);
 
-fprintf('Vo     = %.3f V \n',sscanf(char(Vo),'%f'));
+%fprintf('Vo     = %.3f V \n',sscanf(char(Vo),'%f'));
 
